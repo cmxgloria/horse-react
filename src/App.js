@@ -73,8 +73,7 @@ function Horses({ items }) {
   // if no props, use items then no need props; {items} destructure items = props.items; key mainly use especially list, dynamic item
   return (
     <section>
-      <h1>horses</h1>
-      <p>horses details</p>
+      <h1>Melbourne Cup Special</h1>
       {/* no need prop.items*/}
       {items.map(item => (
         <Link key={item.name} to={`/horses/${item.name}`}>
@@ -88,11 +87,14 @@ function Horses({ items }) {
 function HorsesDetails(props) {
   // useParams-custom hook from react-router-dom library, automatically destructe the name; hooks is kinds of closure, it remembers to the state
   const { name } = useParams();
+  const horse = props.items.find(i => i.name === name);
   return (
     <section>
       <h1>details</h1>
-      <h2>{name}</h2>
-      <h3>horse year of birth</h3>
+      {/* <h2>{name}</h2>  this worked before, we use userParams get the name, either works; like {id}*/}
+      <h2>{horse.name}</h2>
+      <h2>{horse.yearOfBirth}</h2>
+      <h2>{horse.country}</h2>
     </section>
   );
 }
@@ -108,7 +110,7 @@ class App extends React.Component {
         {/* withdraw everything on the page */}
         <Switch>
           <Route path="/horses/:name">
-            <HorsesDetails />
+            <HorsesDetails items={horses} />
           </Route>
           <Route path="/horses">
             <Horses items={horses} />
